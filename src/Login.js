@@ -1,11 +1,36 @@
-import React, { useState } from "react";
+import React, {useCallback, useState} from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import Background from "./Background";
 import { blue } from "./Constants";
 import Field from "./Field";
 import Btn from "./Btn";
+import axios from "axios";
 
 const Login = (props) => {
+
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+
+    const handleChange = useCallback((param) => {
+        console.log(param)
+    }, [])
+
+    const handleSubmit = async () => {
+        const data = {
+            email,
+            senha
+        }
+        console.log("data", data)
+        let res
+
+        try {
+            res = await axios.post('https://svd-server.onrender.com/auth/login', data)
+            props.navigation.navigate("Cadastro")
+        } catch (e) {
+            console.log(e)
+        }
+        console.log(res.data)
+    }
 
     return(
         <Background>
@@ -38,8 +63,8 @@ const Login = (props) => {
                         marginTop: 5
                     }}>Faça login para continuar:</Text>
 
-                        <Field placeholder= "E-mail" keyboardType={"email-address"} />
-                        <Field placeholder= "Senha" secureTextEntry={true} />
+                        <Field onChangeText={setEmail}  placeholder= "E-mail" keyboardType={"email-address"} />
+                        <Field onChangeText={setSenha} placeholder= "Senha" secureTextEntry={true} />
                 
                     <View style={{ alignItems: "flex-end", width: "78%", paddingRight: 16, marginBottom: 30 }}>
                         <Text style={{ 
@@ -49,7 +74,7 @@ const Login = (props) => {
                         }}>Esqueceu sua senha?</Text>                   
                     </View>
 
-                    <Btn textColor="white" bgColor={blue} btnLabel="Login" Press={() => alert("Você está logado")}/>
+                    <Btn textColor="white" bgColor={blue} btnLabel="Login" Press={handleSubmit}/>
 
                     <View style={{ display: "flex", flexDirection: "row", justifyContent: "center"}}>
 

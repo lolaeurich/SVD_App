@@ -74,11 +74,11 @@ const Login = (props) => {
                         }}>Esqueceu sua senha?</Text>                   
                     </View>
 
-                    <Btn textColor="white" bgColor={blue} btnLabel="Login" Press={handleSubmit}/>
+                    <Btn textColor="white" bgColor={blue} btnLabel="Login" Press={() => props.navigation.navigate("InitialPage")}/>
 
                     <View style={{ display: "flex", flexDirection: "row", justifyContent: "center"}}>
 
-                        <Text style={{ fontSize: 16 }}>Não possui uma conta? </Text>
+                        <Text style={{ fontSize: 16 }}>Não possui uma conta?</Text>
 
                         <TouchableOpacity onPress={() => props.navigation.navigate("Cadastro")}>
                             <Text style={{ color: blue, fontWeight: "bold", fontSize: 16 }}>Inscreva-se.</Text>
